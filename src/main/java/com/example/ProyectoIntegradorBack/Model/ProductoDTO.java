@@ -1,4 +1,6 @@
 package com.example.ProyectoIntegradorBack.Model;
 
-public record ProductoDTO(String nombre, String descripcion) {
+import java.util.Date;
+
+public record ProductoDTO(String nombre, String descripcion, Date fecha, int cupo){
 }
