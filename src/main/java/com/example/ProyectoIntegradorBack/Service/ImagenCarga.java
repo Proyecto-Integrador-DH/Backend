@@ -47,9 +47,10 @@ public class ImagenCarga {
                 e.printStackTrace();
             }
 
+            imagenRepository.save(imagen);
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, altTextImg, file);
             s3.putObject(putObjectRequest);
-            imagenRepository.save(imagen);
+
             System.out.println("Imagen cargada exitosamente a S3.");
         }
     }
