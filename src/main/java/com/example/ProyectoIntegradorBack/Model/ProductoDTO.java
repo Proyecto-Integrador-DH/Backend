@@ -1,6 +1,6 @@
 package com.example.ProyectoIntegradorBack.Model;
 
-public class PasajeroDTO {
+public class ProductoDTO {
     private Integer id;
     private String nombreCompleto;
 
@@ -20,12 +20,12 @@ public class PasajeroDTO {
         this.nombreCompleto = nombreCompleto;
     }
 
-    public PasajeroDTO(Integer id, String nombreCompleto) {
+    public ProductoDTO(Integer id, String nombreCompleto) {
         this.id = id;
         this.nombreCompleto = nombreCompleto;
     }
 
-    public PasajeroDTO(String nombre, String apellido){
+    public ProductoDTO(String nombre, String apellido){
         this.nombreCompleto= nombre+ "" + apellido;
     }
 
