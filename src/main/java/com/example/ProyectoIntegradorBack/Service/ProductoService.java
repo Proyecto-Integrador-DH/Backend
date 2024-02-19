@@ -5,7 +5,6 @@ import com.example.ProyectoIntegradorBack.Model.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Repository.IProductoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

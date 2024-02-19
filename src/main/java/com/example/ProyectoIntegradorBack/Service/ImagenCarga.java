@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.ProyectoIntegradorBack.Model.Imagen;
 import com.example.ProyectoIntegradorBack.Repository.IImagenRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +22,6 @@ public class ImagenCarga {
     @Autowired
     private IImagenRepository imagenRepository;
 
-    @Autowired
-    ObjectMapper mapper;
-
     private final AmazonS3 s3 =  (AmazonS3Client) AmazonS3ClientBuilder.standard().build();
     private final String bucketName = "test-s3-java-upload";
 
@@ -38,7 +34,7 @@ public class ImagenCarga {
 
         for(int i = 0; i < base64Images.size(); i++){
             String base64 = base64Images.get(i);
-            String keyName = path + "/" + altText+ i + ".png";
+            String keyName = path + "/" + (altText != null ? altText : "img") + i + ".png";
 
             byte[] decodedBytes = Base64.getDecoder().decode(base64);
 
