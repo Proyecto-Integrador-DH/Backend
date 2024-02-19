@@ -1,32 +1,51 @@
 package com.example.ProyectoIntegradorBack.Model;
 
 public class ProductoDTO {
-    private Integer id;
-    private String nombreCompleto;
+    private int id;
+    private String name;
+    private String description;
+    private int imagesId;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public String getName(String producto1) {
+        return name;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public ProductoDTO(Integer id, String nombreCompleto) {
+    public String getDescription(String prueba1) {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getImagesId(String imagen1) {
+        return imagesId;
+    }
+
+    public void setImagesId(int imagesId) {
+        this.imagesId = imagesId;
+    }
+
+    public ProductoDTO(int id, String name, String description, int imagesId) {
         this.id = id;
-        this.nombreCompleto = nombreCompleto;
+        this.name = name;
+        this.description = description;
+        this.imagesId = imagesId;
     }
 
-    public ProductoDTO(String nombre, String apellido){
-        this.nombreCompleto= nombre+ "" + apellido;
-    }
 
+    public ProductoDTO() {
+    }
 }
