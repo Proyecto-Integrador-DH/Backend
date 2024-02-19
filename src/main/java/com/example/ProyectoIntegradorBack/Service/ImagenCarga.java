@@ -28,13 +28,13 @@ public class ImagenCarga {
     public void cargarImagen(Imagen imagen){
 
         List<String> base64Images = imagen.getImgPath() != null ? imagen.getImgPath() : Collections.emptyList();
-        String altText = imagen.getAltText();
+        String altText = imagen.getAltText() != null ? imagen.getAltText() : "img";
         RandomLetras randomLetras = new RandomLetras();
         String path = randomLetras.randomString(4);
 
         for(int i = 0; i < base64Images.size(); i++){
             String base64 = base64Images.get(i);
-            String keyName = path + "/" + (altText != null ? altText : "img") + i + ".png";
+            String keyName = path + "/" + altText + i + ".png";
 
             byte[] decodedBytes = Base64.getDecoder().decode(base64);
 
