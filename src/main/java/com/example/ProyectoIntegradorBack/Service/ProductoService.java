@@ -57,4 +57,9 @@ public class ProductoService implements IProductoService {
         }
         return productosDto;
     }
+
+    public Producto getProducto(Integer id) {
+        Optional<Producto> producto = productoRepository.findById(id);
+        return producto.orElse(null);
+    }
 }

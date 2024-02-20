@@ -21,7 +21,13 @@ public class Producto {
     private Date fecha;
     private int cupo;
 
+    private boolean activo;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "producto_id")
     private List<Imagen> imagenes;
+
+    public Producto orElseThrow(Object o) {
+        return null;
+    }
 }

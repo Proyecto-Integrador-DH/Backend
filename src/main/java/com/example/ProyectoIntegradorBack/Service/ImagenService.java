@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.ProyectoIntegradorBack.Model.Imagen;
+import com.example.ProyectoIntegradorBack.Model.Producto;
 import com.example.ProyectoIntegradorBack.Repository.IImagenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,14 @@ public class ImagenService {
     @Autowired
     private IImagenRepository imagenRepository;
 
+    @Autowired
+    private ProductoService productoService;
+
     private final AmazonS3 s3 =  (AmazonS3Client) AmazonS3ClientBuilder.standard().build();
     private final String bucketName = "test-s3-java-upload";
-    public void guardarImagen(Imagen imagen){
+    public void guardarImagen(Integer productoId, Imagen imagen){
+        Producto producto = productoService.getProducto(productoId).orElseThrow(null);
+
         List<String> base64Images = imagen.getImgPath() != null ? imagen.getImgPath() : Collections.emptyList();
         String altText = imagen.getAltText() != null ? imagen.getAltText() : "img";
         RandomLetras randomLetras = new RandomLetras();
@@ -49,6 +55,7 @@ public class ImagenService {
             Imagen imagenNueva = new Imagen();
             imagenNueva.setAltText(altText);
             imagenNueva.setUrl("https://test-s3-java-upload.s3.amazonaws.com/" + keyName);
+            imagenNueva.setProducto(producto);
             imagenRepository.save(imagenNueva);
 
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, keyName, file);

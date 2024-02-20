@@ -19,6 +19,10 @@ public class Imagen {
     private String url;
     private String altText;
 
+    @ManyToOne
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
+
     public List<String> getImgPath() {
         return imgPath;
     }
@@ -29,6 +33,14 @@ public class Imagen {
 
     public String getUrl() {
         return url;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public void setUrl(String url) {
