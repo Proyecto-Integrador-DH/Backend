@@ -32,7 +32,7 @@ public class ImagenService {
     private final AmazonS3 s3 =  (AmazonS3Client) AmazonS3ClientBuilder.standard().build();
     private final String bucketName = "test-s3-java-upload";
     public void guardarImagen(Integer productoId, Imagen imagen){
-        Producto producto = productoService.getProducto(productoId).orElseThrow(null);
+        Producto producto = productoService.getProducto(productoId);
 
         List<String> base64Images = imagen.getImgPath() != null ? imagen.getImgPath() : Collections.emptyList();
         String altText = imagen.getAltText() != null ? imagen.getAltText() : "img";
