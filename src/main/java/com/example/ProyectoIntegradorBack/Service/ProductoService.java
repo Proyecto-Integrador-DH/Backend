@@ -23,11 +23,17 @@ public class ProductoService implements IProductoService{
 
     @Override
     public ProductoDTO verProducto(int id) {
-        return null;
-    }
+            Optional<Producto> producto = productoRepository.findById(id);
+            ProductoDTO productoDTO = null;
+            if (producto.isPresent()) {
+                productoDTO = mapper.convertValue(producto, ProductoDTO.class);
+            }
+            return productoDTO;
+        }
 
     @Override
     public void modificarProducto(ProductoDTO productoDTO) {
+
     }
 
     @Override
@@ -61,4 +67,10 @@ public class ProductoService implements IProductoService{
 
         return productosDto;
     }
+
 }
+
+
+
+
+
