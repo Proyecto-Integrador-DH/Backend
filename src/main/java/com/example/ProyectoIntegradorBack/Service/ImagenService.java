@@ -76,4 +76,8 @@ public class ImagenService {
             return sb.toString();
         }
     }
+
+    public List<Imagen> getImagenes(Integer productoId){
+        return imagenRepository.findByProductoId(productoId);
+    }
 }
