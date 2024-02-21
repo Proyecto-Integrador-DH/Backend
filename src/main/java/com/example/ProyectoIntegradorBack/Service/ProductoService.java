@@ -15,6 +15,7 @@ public class ProductoService implements IProductoService{
     @Autowired
     ObjectMapper mapper;
 
+
     @Override
     public void registrarProducto(ProductoDTO productoDTO) {
         Producto producto = mapper.convertValue(productoDTO, Producto.class);
@@ -23,13 +24,14 @@ public class ProductoService implements IProductoService{
 
     @Override
     public ProductoDTO verProducto(int id) {
-            Optional<Producto> producto = productoRepository.findById(id);
-            ProductoDTO productoDTO = null;
-            if (producto.isPresent()) {
-                productoDTO = mapper.convertValue(producto, ProductoDTO.class);
-            }
-            return productoDTO;
+        Optional<Producto> optionalProducto = productoRepository.findById(id);
+        ProductoDTO productoDTO = null;
+        if (optionalProducto.isPresent()) {
+            Producto producto = optionalProducto.get();
+            productoDTO = mapper.convertValue(producto, ProductoDTO.class);
         }
+        return productoDTO;
+    }
 
     @Override
     public void modificarProducto(ProductoDTO productoDTO) {
@@ -66,6 +68,15 @@ public class ProductoService implements IProductoService{
         }
 
         return productosDto;
+    }
+
+    //para utilizar en las pruebas unitarias
+    public void setProductoRepository(IProductoRepository productoRepository) {
+        this.productoRepository = productoRepository;
+    }
+
+    public void setMapper(ObjectMapper mapper) {
+        this.mapper = mapper;
     }
 
 }

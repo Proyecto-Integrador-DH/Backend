@@ -16,7 +16,7 @@ public class Producto {
     private String description;
     private Date date;
     private int availability;
-    private Enum actions;
+    //private Enum actions;
     private int imagesId;
 
     public int getId() {
@@ -59,13 +59,13 @@ public class Producto {
         this.availability = availability;
     }
 
-    public Enum getActions() {
-        return actions;
-    }
+   // public Enum getActions() {
+    //    return actions;
+  //  }
 
-    public void setActions(Enum actions) {
-        this.actions = actions;
-    }
+    //public void setActions(Enum actions) {
+      //  this.actions = actions;
+   // }
 
     public int getImagesId() {
         return imagesId;
@@ -75,13 +75,13 @@ public class Producto {
         this.imagesId = imagesId;
     }
 
-    public Producto(int id, String name, String description, Date date, int availability, Enum actions, int imagesId) {
+    public Producto(int id, String name, String description, Date date, int availability, int imagesId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.date = date;
         this.availability = availability;
-        this.actions = actions;
+        //this.actions = actions;
         this.imagesId = imagesId;
     }
 

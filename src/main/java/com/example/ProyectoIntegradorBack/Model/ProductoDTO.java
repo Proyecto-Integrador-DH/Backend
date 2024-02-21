@@ -6,15 +6,7 @@ public class ProductoDTO {
     private String description;
     private int imagesId;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName(String producto1) {
+    public String getName() {
         return name;
     }
 
@@ -22,7 +14,7 @@ public class ProductoDTO {
         this.name = name;
     }
 
-    public String getDescription(String prueba1) {
+    public String getDescription() {
         return description;
     }
 
@@ -30,7 +22,7 @@ public class ProductoDTO {
         this.description = description;
     }
 
-    public int getImagesId(String imagen1) {
+    public int getImagesId() {
         return imagesId;
     }
 
@@ -44,7 +36,6 @@ public class ProductoDTO {
         this.description = description;
         this.imagesId = imagesId;
     }
-
 
     public ProductoDTO() {
     }
