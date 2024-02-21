@@ -13,8 +13,8 @@ public class ImagenController {
     private ImagenService imagenService;
 
     @PostMapping("/cargar")
-    public void cargarImagen(@RequestBody Integer productoId, Imagen imagen){
-        imagenService.guardarImagen(productoId, imagen);
+    public void cargarImagen(@RequestBody Imagen imagen){
+        imagenService.guardarImagen(imagen);
     }
 
     @GetMapping("/listar/{productoId}")

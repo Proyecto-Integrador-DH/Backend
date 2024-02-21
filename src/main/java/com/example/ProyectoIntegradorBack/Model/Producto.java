@@ -26,4 +26,8 @@ public class Producto {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "producto_id")
     private List<Imagen> imagenes;
+
+    public Integer getId() {
+        return id;
+    }
 }
