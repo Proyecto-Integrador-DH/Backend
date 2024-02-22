@@ -1,5 +1,6 @@
 package com.example.ProyectoIntegradorBack.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,10 +22,35 @@ public class Producto {
     private Date fecha;
     private int cupo;
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public int getCupo() {
+        return cupo;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public List<Imagen> getImagenes() {
+        return imagenes;
+    }
+
     private boolean activo;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "producto_id")
+    @JsonIgnore
     private List<Imagen> imagenes;
 
     public Integer getId() {

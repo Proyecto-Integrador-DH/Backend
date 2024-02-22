@@ -1,5 +1,6 @@
 package com.example.ProyectoIntegradorBack.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Imagen {
 
     @ManyToOne
     @JoinColumn(name = "producto_id")
+    @JsonBackReference
     private Producto producto;
 
     public List<String> getImgPath() {

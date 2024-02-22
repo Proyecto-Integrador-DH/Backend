@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,12 +27,12 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public ProductoDTO verProducto(int id) {
+    public ProductoDTO verProducto(Integer id) {
         Optional<Producto> optionalProducto = productoRepository.findById(id);
         ProductoDTO productoDTO = null;
         if (optionalProducto.isPresent()) {
             Producto producto = optionalProducto.get();
-            productoDTO = mapper.convertValue(producto, ProductoDTO.class);
+            productoDTO = convertToDto(producto);
         }
         return productoDTO;
     }
@@ -51,7 +48,7 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public Set<ProductoDTO> listarProductos() {
+    public Set<ProductoDTO> listarTodos() {
         List<Producto> productos = productoRepository.findAll();
 
         Collections.shuffle(productos);
@@ -71,10 +68,22 @@ public class ProductoService implements IProductoService {
             indicesElegidos.add(indiceAleatorio);
 
             Producto producto = productos.get(indiceAleatorio);
-            productosDto.add(mapper.convertValue(producto, ProductoDTO.class));
+            productosDto.add(convertToDto(producto));
         }
 
         return productosDto;
+    }
+
+    private ProductoDTO convertToDto(Producto producto) {
+        ProductoDTO dto = new ProductoDTO(
+                producto.getNombre(),
+                producto.getDescripcion(),
+                producto.getFecha(),
+                producto.getCupo(),
+                producto.isActivo(),
+                producto.getImagenes()
+        );
+        return dto;
     }
 
     public Producto getProducto(Integer id) {

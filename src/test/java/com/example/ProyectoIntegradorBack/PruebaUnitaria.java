@@ -15,6 +15,7 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -53,10 +54,10 @@ public class PruebaUnitaria {
 
         for (Producto producto : productos) {
             when(mockMapper.convertValue(eq(producto), eq(ProductoDTO.class))).thenReturn(
-                    new ProductoDTO(producto.getId(), producto.getName(), producto.getDescription(), producto.getImagesId()));
+                    new ProductoDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.getImagenes()));
         }
 
-        Set<ProductoDTO> resultado = productoService.listarProductos();
+        Set<ProductoDTO> resultado = productoService.listarTodos();
 
         assertEquals(10, resultado.size());
 
