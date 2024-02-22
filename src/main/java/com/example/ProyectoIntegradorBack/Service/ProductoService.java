@@ -30,11 +30,13 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public ProductoDTO verProducto(Integer id) {
-        Optional<Producto> producto = productoRepository.findById(id);
+    public ProductoDTO verProducto(int id) {
+        Optional<Producto> optionalProducto = productoRepository.findById(id);
         ProductoDTO productoDTO = null;
-        if(producto.isPresent())
+        if (optionalProducto.isPresent()) {
+            Producto producto = optionalProducto.get();
             productoDTO = mapper.convertValue(producto, ProductoDTO.class);
+        }
         return productoDTO;
     }
 
@@ -49,12 +51,29 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public Set<ProductoDTO> listarTodos() {
+    public Set<ProductoDTO> listarProductos() {
         List<Producto> productos = productoRepository.findAll();
+
+        Collections.shuffle(productos);
+        int maxProductos = Math.min(productos.size(), 10);
+
         Set<ProductoDTO> productosDto = new HashSet<>();
-        for(Producto producto : productos){
+        Set<Integer> indicesElegidos = new HashSet<>();
+
+        Random random = new Random();
+        for (int i = 0; i < maxProductos; i++) {
+            int indiceAleatorio;
+
+            do {
+                indiceAleatorio = random.nextInt(productos.size());
+            } while (indicesElegidos.contains(indiceAleatorio));
+
+            indicesElegidos.add(indiceAleatorio);
+
+            Producto producto = productos.get(indiceAleatorio);
             productosDto.add(mapper.convertValue(producto, ProductoDTO.class));
         }
+
         return productosDto;
     }
 
