@@ -1,15 +1,16 @@
 package com.example.ProyectoIntegradorBack.Service;
 
-import com.example.ProyectoIntegradorBack.Model.ProductoDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 
 import java.util.Set;
 
 public interface IProductoService {
-    ProductoDTO registrarProducto(ProductoDTO productoDTO);
-    ProductoDTO verProducto(Integer id);
+    ProductoDTO postProducto(ProductoDTO productoDTO);
+    ProductoDTO getProductoDTO(Integer id);
 
-    void modificarProducto(ProductoDTO productoDTO);
-    void eliminarProducto(Integer id);
-    Set<ProductoDTO> listarTodos();
+    void updateProducto(ProductoDTO productoDTO);
+    void deleteProducto(Integer id);
+    Set<ProductoDTO> getAllProductos();
+
 }
 

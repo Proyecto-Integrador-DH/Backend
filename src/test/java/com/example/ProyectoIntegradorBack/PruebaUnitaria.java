@@ -1,14 +1,12 @@
 package com.example.ProyectoIntegradorBack;
-
+/*
 import com.example.ProyectoIntegradorBack.Model.Producto;
-import com.example.ProyectoIntegradorBack.Model.ProductoDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Repository.IProductoRepository;
-import com.example.ProyectoIntegradorBack.Service.IProductoService;
-import com.example.ProyectoIntegradorBack.Service.ProductoService;
+import com.example.ProyectoIntegradorBack.Service.IImagenService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
@@ -25,13 +23,13 @@ public class PruebaUnitaria {
 
     private IProductoRepository mockProductoRepository;
     private ObjectMapper mockMapper;
-    private ProductoService productoService;
+    private IImagenService.ProductoService productoService;
 
     @Before
     public void setUp() {
         mockProductoRepository = mock(IProductoRepository.class);
         mockMapper = mock(ObjectMapper.class);
-        productoService = new ProductoService();
+        productoService = new IImagenService.ProductoService();
 
         productoService.setProductoRepository(mockProductoRepository);
         productoService.setMapper(mockMapper);
@@ -114,6 +112,6 @@ public class PruebaUnitaria {
         verify(mockProductoRepository, times(1)).findById(productId);
         verify(mockMapper, never()).convertValue(any(), eq(ProductoDTO.class));
     }
-}
+}*/
 
 

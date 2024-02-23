@@ -1,14 +1,17 @@
-package com.example.ProyectoIntegradorBack.Service;
+package com.example.ProyectoIntegradorBack.Service.Impl;
 
+import com.example.ProyectoIntegradorBack.Model.DTOs.ImagenDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.Producto;
-import com.example.ProyectoIntegradorBack.Model.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Repository.IProductoRepository;
+import com.example.ProyectoIntegradorBack.Service.IProductoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,14 +23,14 @@ public class ProductoService implements IProductoService {
     ObjectMapper mapper;
 
     @Override
-    public ProductoDTO registrarProducto(ProductoDTO productoDTO) {
+    public ProductoDTO postProducto(ProductoDTO productoDTO) {
         Producto producto = mapper.convertValue(productoDTO, Producto.class);
         productoRepository.save(producto);
         return mapper.convertValue(producto, ProductoDTO.class);
     }
 
     @Override
-    public ProductoDTO verProducto(Integer id) {
+    public ProductoDTO getProductoDTO(Integer id) {
         Optional<Producto> optionalProducto = productoRepository.findById(id);
         ProductoDTO productoDTO = null;
         if (optionalProducto.isPresent()) {
@@ -38,17 +41,17 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public void modificarProducto(ProductoDTO productoDTO) {
-        registrarProducto(productoDTO);
+    public void updateProducto(ProductoDTO productoDTO) {
+        postProducto(productoDTO);
     }
 
     @Override
-    public void eliminarProducto(Integer id) {
+    public void deleteProducto(Integer id) {
         productoRepository.deleteById(id);
     }
 
     @Override
-    public Set<ProductoDTO> listarTodos() {
+    public Set<ProductoDTO> getAllProductos() {
         List<Producto> productos = productoRepository.findAll();
 
         Collections.shuffle(productos);
@@ -75,13 +78,17 @@ public class ProductoService implements IProductoService {
     }
 
     private ProductoDTO convertToDto(Producto producto) {
+        List<ImagenDTO> imagenesDto = producto.getImagenes().stream()
+                .map(imagen -> new ImagenDTO(imagen.getUrl(), imagen.getAltText()))
+                .collect(Collectors.toList());
+
         ProductoDTO dto = new ProductoDTO(
                 producto.getNombre(),
                 producto.getDescripcion(),
                 producto.getFecha(),
                 producto.getCupo(),
-                producto.isActivo(),
-                producto.getImagenes()
+                producto.isDisponible(),
+                imagenesDto
         );
         return dto;
     }

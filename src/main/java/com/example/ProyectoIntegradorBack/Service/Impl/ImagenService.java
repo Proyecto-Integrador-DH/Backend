@@ -1,4 +1,4 @@
-package com.example.ProyectoIntegradorBack.Service;
+package com.example.ProyectoIntegradorBack.Service.Impl;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -7,6 +7,8 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.ProyectoIntegradorBack.Model.Imagen;
 import com.example.ProyectoIntegradorBack.Model.Producto;
 import com.example.ProyectoIntegradorBack.Repository.IImagenRepository;
+import com.example.ProyectoIntegradorBack.Service.IImagenService;
+import com.example.ProyectoIntegradorBack.Utils.RandomLetras;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,13 +17,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class ImagenService {
+public class ImagenService implements IImagenService {
 
     @Autowired
     private IImagenRepository imagenRepository;
@@ -31,14 +31,15 @@ public class ImagenService {
 
     private final AmazonS3 s3 =  (AmazonS3Client) AmazonS3ClientBuilder.standard().build();
     private final String bucketName = "test-s3-java-upload";
+
+    @Override
     public void guardarImagen(Imagen imagen){
         Integer productoId = imagen.getProducto().getId();
         Producto producto = productoService.getProducto(productoId);
 
         List<String> base64Images = imagen.getImgPath() != null ? imagen.getImgPath() : Collections.emptyList();
         String altText = imagen.getAltText() != null ? imagen.getAltText() : "img";
-        RandomLetras randomLetras = new RandomLetras();
-        String path = randomLetras.randomString(4);
+        String path = RandomLetras.randomString(4);
 
         for(int i = 0; i < base64Images.size(); i++){
             String base64 = base64Images.get(i);
@@ -66,18 +67,9 @@ public class ImagenService {
         }
     }
 
-    public class RandomLetras {
-        public String randomString(int length) {
-            String letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < length; i++) {
-                int index = (int)(letras.length() * Math.random());
-                sb.append(letras.charAt(index));
-            }
-            return sb.toString();
-        }
-    }
 
+
+    @Override
     public List<Imagen> getImagenes(Integer productoId){
         return imagenRepository.findByProductoId(productoId);
     }
