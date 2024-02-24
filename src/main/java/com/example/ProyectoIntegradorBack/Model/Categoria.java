@@ -22,4 +22,20 @@ public class Categoria {
     @JoinColumn(name = "categoria_id")
     @JsonIgnore
     private List<Producto> productos;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
 }
