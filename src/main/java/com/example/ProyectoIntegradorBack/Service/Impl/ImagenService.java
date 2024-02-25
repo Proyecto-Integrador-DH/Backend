@@ -35,7 +35,6 @@ public class ImagenService implements IImagenService {
 
     @Override
     public void guardarImagen(Imagen imagen){
-        System.out.println("Imagen del backend service: " + imagen.toString());
         Integer productoId = imagen.getProducto().getId();
         Producto producto = productoService.getProducto(productoId);
 
