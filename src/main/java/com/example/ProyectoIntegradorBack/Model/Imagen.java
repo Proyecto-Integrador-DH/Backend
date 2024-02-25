@@ -51,4 +51,15 @@ public class Imagen {
     public String getUrl() {
         return url;
     }
+
+    @Override
+    public String toString() {
+        return "Imagen{" +
+                "id=" + id +
+                ", imgPath=" + imgPath +
+                ", url='" + url + '\'' +
+                ", altText='" + altText + '\'' +
+                ", producto=" + producto +
+                '}';
+    }
 }

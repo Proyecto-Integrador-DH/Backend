@@ -23,10 +23,10 @@ public class ProductoService implements IProductoService {
     ObjectMapper mapper;
 
     @Override
-    public ProductoDTO postProducto(ProductoDTO productoDTO) {
+    public Producto postProducto(ProductoDTO productoDTO) {
         Producto producto = mapper.convertValue(productoDTO, Producto.class);
-        productoRepository.save(producto);
-        return mapper.convertValue(producto, ProductoDTO.class);
+        Producto productoNuevo = productoRepository.save(producto);
+        return productoNuevo;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.ProyectoIntegradorBack.Controller;
 
 import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
+import com.example.ProyectoIntegradorBack.Model.Producto;
 import com.example.ProyectoIntegradorBack.Service.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,8 +48,9 @@ public class ProductoController {
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevoProducto(@RequestBody ProductoDTO productoDTO){
         try {
-            productoService.postProducto(productoDTO);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            Producto producto = productoService.postProducto(productoDTO);
+            Integer id = producto.getId();
+            return ResponseEntity.status(HttpStatus.CREATED).body(id);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>("Ya existe un producto con ese nombre.", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {

@@ -35,12 +35,14 @@ public class ImagenService implements IImagenService {
 
     @Override
     public void guardarImagen(Imagen imagen){
+        System.out.println("Imagen del backend service: " + imagen.toString());
         Integer productoId = imagen.getProducto().getId();
         Producto producto = productoService.getProducto(productoId);
 
         List<String> base64Images = imagen.getImgPath() != null ? imagen.getImgPath() : Collections.emptyList();
         String altText = imagen.getAltText() != null ? imagen.getAltText() : "img";
         String path = RandomLetras.randomString(4);
+        System.out.println("Path: " + path);
 
         for(int i = 0; i < base64Images.size(); i++){
             String base64 = base64Images.get(i);
