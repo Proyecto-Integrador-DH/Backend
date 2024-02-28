@@ -66,6 +66,7 @@ public class CategoriaService implements ICategoriaService {
     private CategoriaDTO convertToDto(Categoria categoria) {
         List<ProductoDTO> productosDto = categoria.getProductos().stream()
                 .map(producto -> new ProductoDTO(
+                        producto.getId(),
                         producto.getNombre(),
                         producto.getDescripcion(),
                         producto.getFecha(),

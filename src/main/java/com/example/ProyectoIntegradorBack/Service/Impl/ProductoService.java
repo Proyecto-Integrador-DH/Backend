@@ -83,6 +83,7 @@ public class ProductoService implements IProductoService {
                 .collect(Collectors.toList());
 
         ProductoDTO dto = new ProductoDTO(
+                producto.getId(),
                 producto.getNombre(),
                 producto.getDescripcion(),
                 producto.getFecha(),

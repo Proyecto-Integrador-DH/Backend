@@ -35,6 +35,7 @@ public class Producto {
     @JoinColumn(name = "producto_id")
     @JsonIgnore
     private List<ProductoReservado> productosReservados;
+
     public String getNombre() {
         return nombre;
     }
