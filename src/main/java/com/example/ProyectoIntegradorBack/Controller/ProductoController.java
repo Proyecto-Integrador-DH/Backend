@@ -1,5 +1,6 @@
 package com.example.ProyectoIntegradorBack.Controller;
 
+import com.example.ProyectoIntegradorBack.Model.DTOs.NuevoProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.Producto;
 import com.example.ProyectoIntegradorBack.Service.IProductoService;
@@ -50,7 +51,7 @@ public class ProductoController {
     }
 
     @PostMapping("/nuevo")
-    public ResponseEntity<?> nuevoProducto(@RequestHeader("Authorization") String token, @RequestBody ProductoDTO productoDTO){
+    public ResponseEntity<?> nuevoProducto(@RequestHeader("Authorization") String token, @RequestBody NuevoProductoDTO productoDTO){
         try {
             tieneRolAdmin = AuthenticationService.getRolesFromToken(token);
             if(!tieneRolAdmin){

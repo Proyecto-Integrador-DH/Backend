@@ -1,6 +1,7 @@
 package com.example.ProyectoIntegradorBack.Service.Impl;
 
 import com.example.ProyectoIntegradorBack.Model.DTOs.ImagenDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.NuevoProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.Producto;
 import com.example.ProyectoIntegradorBack.Repository.IProductoRepository;
@@ -23,7 +24,7 @@ public class ProductoService implements IProductoService {
     ObjectMapper mapper;
 
     @Override
-    public Producto postProducto(ProductoDTO productoDTO) {
+    public Producto postProducto(NuevoProductoDTO productoDTO) {
         Producto producto = mapper.convertValue(productoDTO, Producto.class);
         Producto productoNuevo = productoRepository.save(producto);
         return productoNuevo;
@@ -41,7 +42,7 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public void updateProducto(ProductoDTO productoDTO) {
+    public void updateProducto(NuevoProductoDTO productoDTO) {
         postProducto(productoDTO);
     }
 

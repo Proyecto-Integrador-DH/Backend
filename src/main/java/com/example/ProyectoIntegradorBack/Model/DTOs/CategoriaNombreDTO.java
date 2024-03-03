@@ -1,4 +1,4 @@
 package com.example.ProyectoIntegradorBack.Model.DTOs;
 
-public record CategoriaNombreDTO(String nombre) {
+public record CategoriaNombreDTO(Integer id, String nombre) {
 }
