@@ -12,6 +12,8 @@ public interface IProductoService {
 
     void updateProducto(NuevoProductoDTO productoDTO);
     void deleteProducto(Integer id);
+    Set<ProductoDTO> getAllProductosRandom();
+
     Set<ProductoDTO> getAllProductos();
 
 }

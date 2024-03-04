@@ -37,13 +37,27 @@ public class ProductoController {
     }
 
     @GetMapping("/productos")
-    public ResponseEntity<?> getTodosProductos(){
+    public ResponseEntity<?> getTodosProductosRandom(){
+        try {
+            Collection<ProductoDTO> productos = productoService.getAllProductosRandom();
+            if (productos.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron productos.");
+            } else {
+            return ResponseEntity.ok(productos);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
+        }
+    }
+
+    @GetMapping("/productosAll")
+    public ResponseEntity<?> getTodosProductosAll(){
         try {
             Collection<ProductoDTO> productos = productoService.getAllProductos();
             if (productos.isEmpty()){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron productos.");
             } else {
-            return ResponseEntity.ok(productos);
+                return ResponseEntity.ok(productos);
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");

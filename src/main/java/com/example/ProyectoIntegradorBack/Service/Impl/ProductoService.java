@@ -52,7 +52,7 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public Set<ProductoDTO> getAllProductos() {
+    public Set<ProductoDTO> getAllProductosRandom() {
         List<Producto> productos = productoRepository.findAll();
 
         Collections.shuffle(productos);
@@ -75,6 +75,16 @@ public class ProductoService implements IProductoService {
             productosDto.add(convertToDto(producto));
         }
 
+        return productosDto;
+    }
+
+    @Override
+    public Set<ProductoDTO> getAllProductos() {
+        List<Producto> productos = productoRepository.findAll();
+        Set<ProductoDTO> productosDto = new HashSet<>();
+        for (Producto producto : productos) {
+            productosDto.add(convertToDto(producto));
+        }
         return productosDto;
     }
 
