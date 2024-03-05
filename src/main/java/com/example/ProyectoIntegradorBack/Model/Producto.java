@@ -63,4 +63,8 @@ public class Producto {
     public Integer getId() {
         return id;
     }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 }

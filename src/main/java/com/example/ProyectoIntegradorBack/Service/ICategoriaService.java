@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ICategoriaService {
     CategoriaDTO postCategoria(CategoriaDTO categoriaDTO);
-    CategoriaDTO getCategoria(Integer id);
+    CategoriaNombreDTO getCategoria(Integer id);
     void updateCategoria(CategoriaDTO categoriaDTO);
     void deleteCategoria(Integer id);
     List<CategoriaNombreDTO> getAllCategorias();

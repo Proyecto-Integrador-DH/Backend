@@ -1,8 +1,12 @@
 package com.example.ProyectoIntegradorBack.Controller;
 
+import com.example.ProyectoIntegradorBack.Model.Categoria;
+import com.example.ProyectoIntegradorBack.Model.DTOs.CategoriaDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.CategoriaNombreDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.NuevoProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.Producto;
+import com.example.ProyectoIntegradorBack.Service.ICategoriaService;
 import com.example.ProyectoIntegradorBack.Service.IProductoService;
 import com.example.ProyectoIntegradorBack.Utils.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,8 @@ import java.util.Collection;
 public class ProductoController {
     @Autowired
     IProductoService productoService;
+    @Autowired
+    ICategoriaService categoriaService;
     @Autowired
     private AuthenticationService  AuthenticationService;
     Boolean tieneRolAdmin = false;
@@ -78,6 +84,24 @@ public class ProductoController {
             return new ResponseEntity<>("Ya existe un producto con ese nombre.", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>("Error al procesar la solicitud.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/addCategoria/{idProducto}/{idCategoria}")
+    public ResponseEntity<?> addCategoria(@PathVariable Integer idProducto, @PathVariable Integer idCategoria){
+        //public ResponseEntity<?> addCategoria(@RequestHeader("Authorization") String token, @PathVariable Integer idProducto, @PathVariable Integer idCategoria){
+            try {
+            //tieneRolAdmin = AuthenticationService.getRolesFromToken(token);
+                tieneRolAdmin = true;
+            if(!tieneRolAdmin){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No tiene permisos para realizar esta acción.");
+            }
+            CategoriaNombreDTO categoriaDTO = categoriaService.getCategoria(idCategoria);
+            productoService.addCategoria(idProducto,categoriaDTO);
+            return ResponseEntity.status(HttpStatus.OK).body("Categoría agregada correctamente.");
+        } catch (Exception e) {
+                System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
         }
     }
 }

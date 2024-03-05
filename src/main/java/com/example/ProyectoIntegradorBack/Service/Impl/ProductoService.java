@@ -1,9 +1,9 @@
 package com.example.ProyectoIntegradorBack.Service.Impl;
 
-import com.example.ProyectoIntegradorBack.Model.DTOs.ImagenDTO;
-import com.example.ProyectoIntegradorBack.Model.DTOs.NuevoProductoDTO;
-import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
+import com.example.ProyectoIntegradorBack.Model.Categoria;
+import com.example.ProyectoIntegradorBack.Model.DTOs.*;
 import com.example.ProyectoIntegradorBack.Model.Producto;
+import com.example.ProyectoIntegradorBack.Repository.ICategoriaRepository;
 import com.example.ProyectoIntegradorBack.Repository.IProductoRepository;
 import com.example.ProyectoIntegradorBack.Service.IProductoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -108,5 +108,18 @@ public class ProductoService implements IProductoService {
     public Producto getProducto(Integer id) {
         Optional<Producto> producto = productoRepository.findById(id);
         return producto.orElse(null);
+    }
+
+    @Override
+    public void addCategoria(Integer idProducto, CategoriaNombreDTO categoriaDTO) {
+        Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
+        if (optionalProducto.isPresent()) {
+            Producto producto = optionalProducto.get();
+            Categoria categoria = new Categoria();
+            categoria.setId(categoriaDTO.getId());
+            categoria.setNombre(categoriaDTO.getNombre());
+            producto.setCategoria(categoria);
+            productoRepository.save(producto);
+        }
     }
 }

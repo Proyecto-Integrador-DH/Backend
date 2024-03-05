@@ -32,14 +32,14 @@ public class CategoriaService implements ICategoriaService {
     }
 
     @Override
-    public CategoriaDTO getCategoria(Integer id) {
+    public CategoriaNombreDTO getCategoria(Integer id) {
         Optional<Categoria> optionalCategoria = categoriaRepository.findById(id);
-        CategoriaDTO categoriaDTO = null;
+        CategoriaNombreDTO categoriaNombreDTO = null;
         if (optionalCategoria.isPresent()) {
             Categoria categoria = optionalCategoria.get();
-            categoriaDTO = convertToDto(categoria);
+            categoriaNombreDTO = mapper.convertValue(categoria, CategoriaNombreDTO.class);
         }
-        return categoriaDTO;
+        return categoriaNombreDTO;
     }
 
     @Override

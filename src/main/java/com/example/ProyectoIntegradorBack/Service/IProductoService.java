@@ -1,5 +1,7 @@
 package com.example.ProyectoIntegradorBack.Service;
 
+import com.example.ProyectoIntegradorBack.Model.DTOs.CategoriaDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.CategoriaNombreDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.NuevoProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.Producto;
@@ -15,6 +17,8 @@ public interface IProductoService {
     Set<ProductoDTO> getAllProductosRandom();
 
     Set<ProductoDTO> getAllProductos();
+
+    void addCategoria(Integer idProducto, CategoriaNombreDTO categoriaDTO);
 
 }
 
