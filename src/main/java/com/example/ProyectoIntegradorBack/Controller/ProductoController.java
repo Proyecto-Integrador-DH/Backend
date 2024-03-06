@@ -73,6 +73,7 @@ public class ProductoController {
     @PostMapping("/nuevo")
     public ResponseEntity<?> nuevoProducto(@RequestHeader("Authorization") String token, @RequestBody NuevoProductoDTO productoDTO){
         try {
+            System.out.println("Nuevo producto: " + productoDTO.getNombre());
             tieneRolAdmin = AuthenticationService.getRolesFromToken(token);
             if(!tieneRolAdmin){
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No tiene permisos para realizar esta acción.");
@@ -88,11 +89,11 @@ public class ProductoController {
     }
 
     @PutMapping("/addCategoria/{idProducto}/{idCategoria}")
-    public ResponseEntity<?> addCategoria(@PathVariable Integer idProducto, @PathVariable Integer idCategoria){
-        //public ResponseEntity<?> addCategoria(@RequestHeader("Authorization") String token, @PathVariable Integer idProducto, @PathVariable Integer idCategoria){
+    //public ResponseEntity<?> addCategoria(@PathVariable Integer idProducto, @PathVariable Integer idCategoria){
+    public ResponseEntity<?> addCategoria(@RequestHeader("Authorization") String token, @PathVariable Integer idProducto, @PathVariable Integer idCategoria){
             try {
-            //tieneRolAdmin = AuthenticationService.getRolesFromToken(token);
-                tieneRolAdmin = true;
+            tieneRolAdmin = AuthenticationService.getRolesFromToken(token);
+                //tieneRolAdmin = true;
             if(!tieneRolAdmin){
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No tiene permisos para realizar esta acción.");
             }

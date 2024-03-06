@@ -22,7 +22,7 @@ public class CategoriaController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoria(@PathVariable Integer id){
         try {
-            CategoriaNombreDTO categoriaDTO = categoriaService.getCategoria(id);
+            CategoriaNombreDTO categoriaDTO = categoriaService.getCategoria(id);it a
             if (categoriaDTO != null) {
                 return ResponseEntity.ok(categoriaDTO);
             } else {
