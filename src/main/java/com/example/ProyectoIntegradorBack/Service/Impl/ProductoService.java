@@ -89,6 +89,7 @@ public class ProductoService implements IProductoService {
     }
 
     private ProductoDTO convertToDto(Producto producto) {
+        CategoriaDTO categoriaDTO = mapper.convertValue(producto.getCategoria(), CategoriaDTO.class);
         List<ImagenDTO> imagenesDto = producto.getImagenes().stream()
                 .map(imagen -> new ImagenDTO(imagen.getUrl(), imagen.getAltText()))
                 .collect(Collectors.toList());
@@ -100,6 +101,7 @@ public class ProductoService implements IProductoService {
                 producto.getFecha(),
                 producto.getCupo(),
                 producto.isDisponible(),
+                categoriaDTO,
                 imagenesDto
         );
         return dto;

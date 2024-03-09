@@ -1,10 +1,7 @@
 package com.example.ProyectoIntegradorBack.Service.Impl;
 
 import com.example.ProyectoIntegradorBack.Model.Categoria;
-import com.example.ProyectoIntegradorBack.Model.DTOs.CategoriaDTO;
-import com.example.ProyectoIntegradorBack.Model.DTOs.CategoriaNombreDTO;
-import com.example.ProyectoIntegradorBack.Model.DTOs.ImagenDTO;
-import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.*;
 import com.example.ProyectoIntegradorBack.Repository.ICategoriaRepository;
 import com.example.ProyectoIntegradorBack.Service.ICategoriaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,8 +61,8 @@ public class CategoriaService implements ICategoriaService {
     }
 
     private CategoriaDTO convertToDto(Categoria categoria) {
-        List<ProductoDTO> productosDto = categoria.getProductos().stream()
-                .map(producto -> new ProductoDTO(
+        List<ProductoDTOCat> productosDto = categoria.getProductos().stream()
+                .map(producto -> new ProductoDTOCat(
                         producto.getId(),
                         producto.getNombre(),
                         producto.getDescripcion(),

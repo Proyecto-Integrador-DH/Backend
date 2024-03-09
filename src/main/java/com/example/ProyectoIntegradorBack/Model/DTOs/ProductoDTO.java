@@ -5,5 +5,5 @@ import com.example.ProyectoIntegradorBack.Model.Categoria;
 import java.util.Date;
 import java.util.List;
 
-public record ProductoDTO(Integer Id, String nombre, String descripcion, Date fecha, int cupo, boolean disponible, List<ImagenDTO> imagenes){
+public record ProductoDTO(Integer Id, String nombre, String descripcion, Date fecha, int cupo, boolean disponible, CategoriaDTO categoria, List<ImagenDTO> imagenes){
 }
