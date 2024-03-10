@@ -105,4 +105,23 @@ public class ProductoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
         }
     }
+
+    @DeleteMapping("/deleteProducto/{id}")
+    public ResponseEntity<?> deleteProducto(@RequestHeader("Authorization") String token, @PathVariable Integer id){
+        try {
+            tieneRolAdmin = AuthenticationService.getRolesFromToken(token);
+            if(!tieneRolAdmin){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No tiene permisos para realizar esta acción.");
+            }
+            ProductoDTO producto = productoService.getProductoDTO(id);
+            if (producto == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró ningún producto con el ID especificado.");
+            }
+            System.out.println("Producto a eliminar: " + producto.nombre() + " " + producto.Id());
+            productoService.deleteProducto(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Producto eliminado correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
+        }
+    }
 }

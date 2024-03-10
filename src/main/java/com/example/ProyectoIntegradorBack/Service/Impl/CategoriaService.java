@@ -60,25 +60,26 @@ public class CategoriaService implements ICategoriaService {
         return categoriasDTO;
     }
 
-    private CategoriaDTO convertToDto(Categoria categoria) {
-        List<ProductoDTOCat> productosDto = categoria.getProductos().stream()
-                .map(producto -> new ProductoDTOCat(
-                        producto.getId(),
-                        producto.getNombre(),
-                        producto.getDescripcion(),
-                        producto.getFecha(),
-                        producto.getCupo(),
-                        producto.isDisponible(),
-                        producto.getImagenes().stream()
-                                .map(imagen -> new ImagenDTO(imagen.getUrl(), imagen.getAltText()))
+    @Override
+    public List<CategoriaDTO> getCategoryProducts(Integer id) {
+        List<CategoriaDTO> categoriasDTO = categoriaRepository.findById(id).stream()
+                .map(categoria -> new CategoriaDTO(
+                        categoria.getNombre(),
+                        categoria.getProductos().stream()
+                                .map(producto -> new ProductoDTOCat(
+                                        producto.getId(),
+                                        producto.getNombre(),
+                                        producto.getDescripcion(),
+                                        producto.getFecha(),
+                                        producto.getCupo(),
+                                        producto.isDisponible(),
+                                        producto.getImagenes().stream()
+                                                .map(imagen -> new ImagenDTO(imagen.getUrl(), imagen.getAltText()))
+                                                .collect(Collectors.toList())
+                                ))
                                 .collect(Collectors.toList())
                 ))
                 .collect(Collectors.toList());
-
-        CategoriaDTO dto = new CategoriaDTO(
-                categoria.getNombre(),
-                productosDto
-        );
-        return dto;
+        return categoriasDTO;
     }
 }

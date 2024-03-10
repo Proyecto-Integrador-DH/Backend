@@ -33,6 +33,20 @@ public class CategoriaController {
         }
     }
 
+    @GetMapping("/categoryProducts/{id}")
+    public ResponseEntity<?> getCategoryProducts(@PathVariable Integer id){
+        try {
+            Collection<CategoriaDTO> categoriaDTO = categoriaService.getCategoryProducts(id);
+            if (categoriaDTO != null) {
+                return ResponseEntity.ok(categoriaDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró ninguna categoría con el ID especificado.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
+        }
+    }
+
     @GetMapping("/all")
     public ResponseEntity<?> getAllCategorias(){
         try {

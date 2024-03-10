@@ -16,7 +16,7 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;
-    private String origin;
+    private String origen;
     private Boolean estado;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
