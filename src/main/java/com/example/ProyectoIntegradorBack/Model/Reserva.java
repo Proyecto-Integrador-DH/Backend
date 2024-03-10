@@ -16,14 +16,15 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer id;
-    private String origen;
-    private Boolean estado;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     @JsonBackReference
     private Cliente cliente;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "reserva_id")
-    @JsonIgnore
-    private List<ProductoReservado> productosReservados;
+    @ManyToOne
+    @JoinColumn(name = "agenda_id")
+    @JsonBackReference
+    private Agenda agenda;
+
+    private Integer cantidad;
+    private Boolean estado;
 }

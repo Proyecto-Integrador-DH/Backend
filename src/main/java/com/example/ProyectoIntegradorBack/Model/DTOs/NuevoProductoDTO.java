@@ -5,7 +5,7 @@ import com.example.ProyectoIntegradorBack.Model.Categoria;
 import java.util.Date;
 import java.util.List;
 
-public record NuevoProductoDTO(String nombre, String descripcion, Date fecha, int cupo, boolean disponible, Categoria categoria, List<ImagenDTO> imagenes) {
+public record NuevoProductoDTO(String nombre, String descripcion, boolean disponible, Categoria categoria, List<ImagenDTO> imagenes) {
     public String getNombre() {
         return nombre;
     }

@@ -98,8 +98,6 @@ public class ProductoService implements IProductoService {
                 producto.getId(),
                 producto.getNombre(),
                 producto.getDescripcion(),
-                producto.getFecha(),
-                producto.getCupo(),
                 producto.isDisponible(),
                 categoriaDTO,
                 imagenesDto

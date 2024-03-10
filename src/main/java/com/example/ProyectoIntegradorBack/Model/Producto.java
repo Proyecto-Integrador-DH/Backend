@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -20,8 +19,6 @@ public class Producto {
     private Integer id;
     private String nombre;
     private String descripcion;
-    private Date fecha;
-    private int cupo;
     private boolean disponible;
     @ManyToOne
     @JoinColumn(name = "categoria_id")
@@ -31,10 +28,11 @@ public class Producto {
     @JoinColumn(name = "producto_id")
     @JsonIgnore
     private List<Imagen> imagenes;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "producto_id")
     @JsonIgnore
-    private List<ProductoReservado> productosReservados;
+    private List<Agenda> agendas;
 
     public String getNombre() {
         return nombre;
@@ -42,14 +40,6 @@ public class Producto {
 
     public String getDescripcion() {
         return descripcion;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public int getCupo() {
-        return cupo;
     }
 
     public boolean isDisponible() {
