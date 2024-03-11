@@ -31,7 +31,7 @@ public class ReservaService implements IReservaService {
             AgendaDTO agendaDTO = reservaDTO.agenda();
             Agenda agenda = agendaRepository.findById(agendaDTO.id())
                     .orElseThrow(() -> new EntityNotFoundException("Agenda no encontrada"));
-            if(agenda.getCupos() > reservaDTO.cantidad()){
+            if(agenda.getCupos() >= reservaDTO.cantidad()){
                 agenda.setCupos(agenda.getCupos() - reservaDTO.cantidad());
                 if(agenda.getCupos() == 0){
                     agenda.setEstado(false);
