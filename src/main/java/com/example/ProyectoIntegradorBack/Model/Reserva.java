@@ -17,14 +17,22 @@ public class Reserva {
     @Column(name = "ID")
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    @JsonBackReference
-    private Cliente cliente;
-    @ManyToOne
     @JoinColumn(name = "agenda_id")
     @JsonBackReference
     private Agenda agenda;
 
     private Integer cantidad;
     private Boolean estado;
+
+    public void setAgenda(Agenda agenda) {
+        this.agenda = agenda;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
 }
