@@ -44,7 +44,8 @@ public class AgendaService implements IAgendaService {
             Agenda agenda = new Agenda();
             agenda.setProducto(producto);
             agenda.setCupos(agendaDTO.cupos());
-            agenda.setFecha(agendaDTO.fecha());
+            agenda.setFechaIda(agendaDTO.fechaIda());
+            agenda.setFechaVuelta(agendaDTO.fechaVuelta());
             agenda.setEstado(agendaDTO.estado());
             agendaRepository.save(agenda);
             return mapper.convertValue(agenda, AgendaDTO.class);

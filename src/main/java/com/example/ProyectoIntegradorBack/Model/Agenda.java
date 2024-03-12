@@ -26,8 +26,33 @@ public class Agenda {
     @JsonIgnore
     private List<Reserva> reservas;
     private Integer cupos;
-    private Date fecha;
+    private Date fechaIda;
+    private Date fechaVuelta;
     private Boolean estado;
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
+    }
+
+    public Date getFechaIda() {
+        return fechaIda;
+    }
+
+    public void setFechaIda(Date fechaIda) {
+        this.fechaIda = fechaIda;
+    }
+
+    public Date getFechaVuelta() {
+        return fechaVuelta;
+    }
+
+    public void setFechaVuelta(Date fechaVuelta) {
+        this.fechaVuelta = fechaVuelta;
+    }
 
     public void setProducto(Producto producto) {
         this.producto = producto;
@@ -35,10 +60,6 @@ public class Agenda {
 
     public void setCupos(Integer cupos) {
         this.cupos = cupos;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
     }
 
     public void setEstado(Boolean estado) {
@@ -51,10 +72,6 @@ public class Agenda {
 
     public Integer getCupos() {
         return cupos;
-    }
-
-    public Date getFecha() {
-        return fecha;
     }
 
     public Boolean getEstado() {
