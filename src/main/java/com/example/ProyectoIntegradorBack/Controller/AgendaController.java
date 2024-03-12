@@ -3,11 +3,13 @@ package com.example.ProyectoIntegradorBack.Controller;
 import com.example.ProyectoIntegradorBack.Model.DTOs.AgendaDTO;
 import com.example.ProyectoIntegradorBack.Service.IAgendaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/agenda")
@@ -63,6 +65,23 @@ public class AgendaController {
         try {
             Collection<AgendaDTO> agendas = agendaService.getAgendasByProductId(id);
             if (agendas.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron agendas.");
+            } else {
+                return ResponseEntity.ok(agendas);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
+        }
+    }
+
+    @GetMapping("/categoria/{id}/fechas")
+    public ResponseEntity<?> getAgendasByCategoryIdByFechas(@PathVariable Integer id,
+                                                            @RequestParam("fechaIda") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaIda,
+                                                            @RequestParam("fechaVuelta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaVuelta) {
+        try {
+            // Aquí deberías llamar al servicio correspondiente para obtener las agendas basadas en los parámetros recibidos
+            Collection<AgendaDTO> agendas = agendaService.getAgendasByCategoryIdByFechas(id, fechaIda, fechaVuelta);
+            if (agendas.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron agendas.");
             } else {
                 return ResponseEntity.ok(agendas);

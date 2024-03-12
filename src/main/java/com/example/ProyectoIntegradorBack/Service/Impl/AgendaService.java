@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -73,6 +74,20 @@ public class AgendaService implements IAgendaService {
     @Override
     public List<AgendaDTO> getAgendasByProductId(Integer id) {
         List<Agenda> agendas = agendaRepository.findByProductoId(id);
+        List<AgendaDTO> agendaDTOs = new ArrayList<>();
+        for (Agenda agenda : agendas) {
+            AgendaDTO agendaDTO = mapper.convertValue(agenda, AgendaDTO.class);
+            Producto producto = agenda.getProducto();
+            ProductoDTO productoDTO = mapper.convertValue(producto, ProductoDTO.class);
+            agendaDTO = agendaDTO.withProducto(productoDTO);
+            agendaDTOs.add(agendaDTO);
+        }
+        return agendaDTOs;
+    }
+
+    @Override
+    public List<AgendaDTO> getAgendasByCategoryIdByFechas(Integer id, Date fechaIda, Date fechaVuelta) {
+        List<Agenda> agendas = agendaRepository.findByProductoCategoriaIdAndFechaIdaGreaterThanEqualAndFechaVueltaLessThanEqual(id, fechaIda, fechaVuelta);
         List<AgendaDTO> agendaDTOs = new ArrayList<>();
         for (Agenda agenda : agendas) {
             AgendaDTO agendaDTO = mapper.convertValue(agenda, AgendaDTO.class);
