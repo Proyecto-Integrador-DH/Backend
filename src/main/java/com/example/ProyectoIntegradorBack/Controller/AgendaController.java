@@ -79,7 +79,6 @@ public class AgendaController {
                                                             @RequestParam("fechaIda") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaIda,
                                                             @RequestParam("fechaVuelta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaVuelta) {
         try {
-            // Aquí deberías llamar al servicio correspondiente para obtener las agendas basadas en los parámetros recibidos
             Collection<AgendaDTO> agendas = agendaService.getAgendasByCategoryIdByFechas(id, fechaIda, fechaVuelta);
             if (agendas.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron agendas.");

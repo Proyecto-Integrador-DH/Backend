@@ -12,9 +12,12 @@ import com.example.ProyectoIntegradorBack.Service.IProductoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,8 +48,19 @@ public class AgendaService implements IAgendaService {
             Agenda agenda = new Agenda();
             agenda.setProducto(producto);
             agenda.setCupos(agendaDTO.cupos());
-            agenda.setFechaIda(agendaDTO.fechaIda());
-            agenda.setFechaVuelta(agendaDTO.fechaVuelta());
+
+            Calendar calIda = Calendar.getInstance();
+            calIda.setTime(agendaDTO.fechaIda());
+            calIda.add(Calendar.DAY_OF_MONTH, 1);
+            Date fechaIdaSumada = calIda.getTime();
+            agenda.setFechaIda(fechaIdaSumada);
+
+            Calendar calVuelta = Calendar.getInstance();
+            calVuelta.setTime(agendaDTO.fechaVuelta());
+            calVuelta.add(Calendar.DAY_OF_MONTH, 1);
+            Date fechaVueltaSumada = calVuelta.getTime();
+            agenda.setFechaVuelta(fechaVueltaSumada);
+
             agenda.setEstado(agendaDTO.estado());
             agendaRepository.save(agenda);
             return mapper.convertValue(agenda, AgendaDTO.class);
