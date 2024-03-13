@@ -21,6 +21,7 @@ public class ReservaController {
             ReservaDTO reserva = reservaService.postReserva(reservaDTO);
             return ResponseEntity.ok(reserva);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud." + e.getMessage());
         }
     }

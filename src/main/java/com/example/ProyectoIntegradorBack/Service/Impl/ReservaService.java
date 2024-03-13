@@ -2,10 +2,13 @@ package com.example.ProyectoIntegradorBack.Service.Impl;
 
 import com.amazonaws.services.glue.model.EntityNotFoundException;
 import com.example.ProyectoIntegradorBack.Model.Agenda;
+import com.example.ProyectoIntegradorBack.Model.Cliente;
 import com.example.ProyectoIntegradorBack.Model.DTOs.AgendaDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.ClienteDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.ReservaDTO;
 import com.example.ProyectoIntegradorBack.Model.Reserva;
 import com.example.ProyectoIntegradorBack.Repository.IAgendaRepository;
+import com.example.ProyectoIntegradorBack.Repository.IClienteRepository;
 import com.example.ProyectoIntegradorBack.Repository.IReservaRepository;
 import com.example.ProyectoIntegradorBack.Service.IReservaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +27,8 @@ public class ReservaService implements IReservaService {
     @Autowired
     private IAgendaRepository agendaRepository;
     @Autowired
+    private IClienteRepository clienteRepository;
+    @Autowired
     ObjectMapper mapper;
     @Override
     public ReservaDTO postReserva(ReservaDTO reservaDTO) {
@@ -31,13 +36,20 @@ public class ReservaService implements IReservaService {
             AgendaDTO agendaDTO = reservaDTO.agenda();
             Agenda agenda = agendaRepository.findById(agendaDTO.id())
                     .orElseThrow(() -> new EntityNotFoundException("Agenda no encontrada"));
-            if(agenda.getCupos() >= reservaDTO.cantidad()){
+
+            ClienteDTO clienteDTO = reservaDTO.cliente();
+            Cliente cliente = clienteRepository.findById(clienteDTO.id())
+                    .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+
+            if (agenda.getCupos() >= reservaDTO.cantidad()) {
                 agenda.setCupos(agenda.getCupos() - reservaDTO.cantidad());
-                if(agenda.getCupos() == 0){
+                if (agenda.getCupos() == 0) {
                     agenda.setEstado(false);
                 }
+
                 Reserva reserva = new Reserva();
                 reserva.setAgenda(agenda);
+                reserva.setCliente(cliente);
                 reserva.setCantidad(reservaDTO.cantidad());
                 reserva.setEstado(reservaDTO.estado());
                 reservaRepository.save(reserva);
@@ -47,8 +59,9 @@ public class ReservaService implements IReservaService {
                 throw new RuntimeException("Error: No hay cupos disponibles");
             }
         } catch (EntityNotFoundException e) {
-            throw new RuntimeException("Error: Agenda no encontrada", e);
+            throw new RuntimeException("Error: Agenda o cliente no encontrados", e);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Error al guardar la Reserva", e);
         }
     }

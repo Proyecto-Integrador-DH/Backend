@@ -34,6 +34,11 @@ public class Producto {
     @JsonIgnore
     private List<Agenda> agendas;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "producto_id")
+    @JsonIgnore
+    private List<Favorito> favoritos;
+
     public String getNombre() {
         return nombre;
     }
