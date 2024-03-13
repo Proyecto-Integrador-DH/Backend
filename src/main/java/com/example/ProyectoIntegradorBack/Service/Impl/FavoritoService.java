@@ -56,4 +56,13 @@ public class FavoritoService implements IFavoritoService {
         favoritoRepository.save(favorito);
         return mapper.convertValue(favorito, FavoritoDTO.class);
     }
+
+    @Override
+    public FavoritoDTO favoritoByIdClient(Integer id) {
+        Optional<Favorito> favorito = favoritoRepository.findByClienteId(id);
+        if (favorito.isPresent()) {
+            return mapper.convertValue(favorito.get(), FavoritoDTO.class);
+        }
+        return null;
+    }
 }
