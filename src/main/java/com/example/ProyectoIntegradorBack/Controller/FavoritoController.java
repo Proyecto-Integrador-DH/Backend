@@ -21,19 +21,20 @@ public class FavoritoController {
         }
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<?> updateFavorito(@RequestBody FavoritoDTO favoritoDTO) {
+    @GetMapping("/cliente/{clienteId}/favorito/{productoId}")
+    public ResponseEntity<?> favoritoByIdClient(@PathVariable Integer clienteId, @PathVariable Integer productoId) {
         try {
-            return ResponseEntity.ok(favoritoService.update(favoritoDTO));
+            return ResponseEntity.ok(favoritoService.favoritoByIdClient(clienteId, productoId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @GetMapping("/cliente/{id}")
-    public ResponseEntity<?> favoritoByIdClient(@PathVariable Integer id) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteFavorito(@RequestBody FavoritoDTO favoritoDTO) {
         try {
-            return ResponseEntity.ok(favoritoService.favoritoByIdClient(id));
+            favoritoService.delete(favoritoDTO);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

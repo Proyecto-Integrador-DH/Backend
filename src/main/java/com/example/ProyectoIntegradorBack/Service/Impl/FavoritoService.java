@@ -42,7 +42,6 @@ public class FavoritoService implements IFavoritoService {
             favorito.setCliente(optionalCliente.get());
             favorito.setProducto(optionalProducto.get());
             favorito.setEstado(true);
-            System.out.println(favorito.getCliente());
             favoritoRepository.save(favorito);
             return mapper.convertValue(favorito, FavoritoDTO.class);
         }
@@ -50,18 +49,21 @@ public class FavoritoService implements IFavoritoService {
     }
 
     @Override
-    public FavoritoDTO update(FavoritoDTO favoritoDTO) {
-        favoritoDTO = favoritoDTO.withEstado(!favoritoDTO.estado());
-        Favorito favorito = mapper.convertValue(favoritoDTO, Favorito.class);
-        favoritoRepository.save(favorito);
-        return mapper.convertValue(favorito, FavoritoDTO.class);
+    public void delete(FavoritoDTO favoritoDTO) {
+        Optional<Favorito> optionalFavorito = favoritoRepository.findByClienteIdAndProductoId(favoritoDTO.cliente().id(), favoritoDTO.producto().Id());
+        if (optionalFavorito.isPresent()) {
+            Favorito favorito = optionalFavorito.get();
+            favorito.setEstado(false);
+            favoritoRepository.delete(favorito);
+        }
     }
 
     @Override
-    public FavoritoDTO favoritoByIdClient(Integer id) {
-        Optional<Favorito> favorito = favoritoRepository.findByClienteId(id);
-        if (favorito.isPresent()) {
-            return mapper.convertValue(favorito.get(), FavoritoDTO.class);
+    public FavoritoDTO favoritoByIdClient(Integer clienteId, Integer productoId) {
+        Optional<Favorito> optionalFavorito = favoritoRepository.findByClienteIdAndProductoId(clienteId, productoId);
+        if (optionalFavorito.isPresent()) {
+            Favorito favorito = optionalFavorito.get();
+            return mapper.convertValue(favorito, FavoritoDTO.class);
         }
         return null;
     }

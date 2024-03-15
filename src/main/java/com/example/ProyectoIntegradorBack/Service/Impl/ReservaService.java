@@ -61,7 +61,6 @@ public class ReservaService implements IReservaService {
         } catch (EntityNotFoundException e) {
             throw new RuntimeException("Error: Agenda o cliente no encontrados", e);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException("Error al guardar la Reserva", e);
         }
     }
