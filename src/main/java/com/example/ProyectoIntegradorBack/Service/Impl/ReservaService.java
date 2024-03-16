@@ -3,9 +3,11 @@ package com.example.ProyectoIntegradorBack.Service.Impl;
 import com.amazonaws.services.glue.model.EntityNotFoundException;
 import com.example.ProyectoIntegradorBack.Model.Agenda;
 import com.example.ProyectoIntegradorBack.Model.Cliente;
+import com.example.ProyectoIntegradorBack.Model.Producto;
 import com.example.ProyectoIntegradorBack.Model.DTOs.AgendaDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.ClienteDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.ReservaDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.Reserva;
 import com.example.ProyectoIntegradorBack.Repository.IAgendaRepository;
 import com.example.ProyectoIntegradorBack.Repository.IClienteRepository;
@@ -104,5 +106,36 @@ public class ReservaService implements IReservaService {
         } catch (Exception e) {
             throw new RuntimeException("Error al obtener las Reservas", e);
         }
+    }
+
+    @Override
+    public List<ReservaDTO> getReservasByCliente(Integer id) {
+        try {
+            List<Reserva> reservas = reservaRepository.findByClienteId(id);
+            return reservas.stream()
+                    .map(reserva -> {
+                        ReservaDTO reservaDTO = mapper.convertValue(reserva, ReservaDTO.class);
+                        reservaDTO = reservaDTO.withAgenda(mapToAgendaDTO(reserva.getAgenda()));
+                        return reservaDTO;
+                    })
+                    .toList();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener las Reservas", e);
+        }
+    }
+
+    private AgendaDTO mapToAgendaDTO(Agenda agenda) {
+        if (agenda == null) {
+            return null;
+        }
+        return new AgendaDTO(agenda.getId(), mapToProductoDTO(agenda.getProducto()), agenda.getCupos(),
+                agenda.getFechaIda(), agenda.getFechaVuelta(), agenda.getEstado());
+    }
+
+    private ProductoDTO mapToProductoDTO(Producto producto) {
+        if (producto == null) {
+            return null;
+        }
+        return new ProductoDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.isDisponible());
     }
 }

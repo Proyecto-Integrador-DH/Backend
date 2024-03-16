@@ -66,4 +66,6 @@ public class Producto {
     public Categoria getCategoria() {
         return categoria;
     }
+
+
 }

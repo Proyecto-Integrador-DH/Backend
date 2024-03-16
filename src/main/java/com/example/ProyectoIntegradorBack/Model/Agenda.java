@@ -79,4 +79,8 @@ public class Agenda {
     public Boolean getEstado() {
         return estado;
     }
+
+    public Integer getId() {
+        return id;
+    }
 }

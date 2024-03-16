@@ -39,4 +39,13 @@ public class FavoritoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/cliente/{id}")
+    public ResponseEntity<?> favoritosByClient(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(favoritoService.favoritosByClient(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

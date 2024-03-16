@@ -59,4 +59,18 @@ public class ReservaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
         }
     }
+
+    @GetMapping("/cliente/{id}")
+    public ResponseEntity<?> getReservasByCliente(@PathVariable Integer id){
+        try {
+            Collection<ReservaDTO> reservas = reservaService.getReservasByCliente(id);
+            if (reservas.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron reservas.");
+            } else {
+                return ResponseEntity.ok(reservas);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
+        }
+    }
 }

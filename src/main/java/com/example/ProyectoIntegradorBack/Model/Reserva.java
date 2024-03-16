@@ -44,4 +44,8 @@ public class Reserva {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public Agenda getAgenda() {
+        return agenda;
+    }
 }

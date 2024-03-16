@@ -9,4 +9,5 @@ public interface IReservaService {
     ReservaDTO getReservaById(Integer id);
     ReservaDTO updateReserva(ReservaDTO reservaDTO);
     List<ReservaDTO> allReservas();
+    List<ReservaDTO> getReservasByCliente(Integer id);
 }
