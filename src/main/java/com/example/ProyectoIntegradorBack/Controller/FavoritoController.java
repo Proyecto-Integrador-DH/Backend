@@ -26,6 +26,7 @@ public class FavoritoController {
         try {
             return ResponseEntity.ok(favoritoService.favoritoByIdClient(clienteId, productoId));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

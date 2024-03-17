@@ -3,6 +3,8 @@ package com.example.ProyectoIntegradorBack.Service.Impl;
 import com.amazonaws.services.glue.model.EntityNotFoundException;
 import com.example.ProyectoIntegradorBack.Model.Agenda;
 import com.example.ProyectoIntegradorBack.Model.DTOs.AgendaDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.CategoriaDTO;
+import com.example.ProyectoIntegradorBack.Model.DTOs.ImagenDTO;
 import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.Producto;
 import com.example.ProyectoIntegradorBack.Repository.IAgendaRepository;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -106,10 +109,27 @@ public class AgendaService implements IAgendaService {
         for (Agenda agenda : agendas) {
             AgendaDTO agendaDTO = mapper.convertValue(agenda, AgendaDTO.class);
             Producto producto = agenda.getProducto();
-            ProductoDTO productoDTO = mapper.convertValue(producto, ProductoDTO.class);
+            ProductoDTO productoDTO = convertToDto(producto);
             agendaDTO = agendaDTO.withProducto(productoDTO);
             agendaDTOs.add(agendaDTO);
         }
         return agendaDTOs;
+    }
+
+    private ProductoDTO convertToDto(Producto producto) {
+        CategoriaDTO categoriaDTO = mapper.convertValue(producto.getCategoria(), CategoriaDTO.class);
+        List<ImagenDTO> imagenesDto = producto.getImagenes().stream()
+                .map(imagen -> new ImagenDTO(imagen.getUrl(), imagen.getAltText()))
+                .collect(Collectors.toList());
+
+        ProductoDTO dto = new ProductoDTO(
+                producto.getId(),
+                producto.getNombre(),
+                producto.getDescripcion(),
+                producto.isDisponible(),
+                categoriaDTO,
+                imagenesDto
+        );
+        return dto;
     }
 }

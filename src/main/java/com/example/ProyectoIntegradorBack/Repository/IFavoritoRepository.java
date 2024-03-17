@@ -9,7 +9,5 @@ import java.util.Optional;
 public interface IFavoritoRepository extends JpaRepository<Favorito, Integer> {
     Optional<Favorito> findByClienteIdAndProductoId(Integer cliente_id, Integer producto_id);
 
-    Optional<Favorito> findByClienteId(Integer cliente_id);
-
     List<Favorito> findAllByClienteId(Integer cliente_id);
 }
