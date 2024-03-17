@@ -104,7 +104,7 @@ public class AgendaService implements IAgendaService {
 
     @Override
     public List<AgendaDTO> getAgendasByCategoryIdByFechas(Integer id, Date fechaIda, Date fechaVuelta) {
-        List<Agenda> agendas = agendaRepository.findByProductoCategoriaIdAndFechaIdaGreaterThanEqualAndFechaVueltaLessThanEqual(id, fechaIda, fechaVuelta);
+        List<Agenda> agendas = agendaRepository.findByProductoCategoriaIdAndFechaIdaGreaterThanEqualAndFechaVueltaLessThanEqualAndCuposGreaterThan(id, fechaIda, fechaVuelta, 0);
         List<AgendaDTO> agendaDTOs = new ArrayList<>();
         for (Agenda agenda : agendas) {
             AgendaDTO agendaDTO = mapper.convertValue(agenda, AgendaDTO.class);

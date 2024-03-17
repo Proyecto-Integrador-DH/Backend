@@ -9,5 +9,5 @@ import java.util.List;
 public interface IAgendaRepository extends JpaRepository<Agenda, Integer> {
     List<Agenda> findByProductoId(Integer id);
 
-    List<Agenda> findByProductoCategoriaIdAndFechaIdaGreaterThanEqualAndFechaVueltaLessThanEqual(Integer id, Date fechaIda, Date fechaVuelta);
+    List<Agenda> findByProductoCategoriaIdAndFechaIdaGreaterThanEqualAndFechaVueltaLessThanEqualAndCuposGreaterThan(Integer id, Date fechaIda, Date fechaVuelta, int cupos);
 }
