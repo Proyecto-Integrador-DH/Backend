@@ -10,5 +10,5 @@ public interface IAgendaService {
     AgendaDTO postAgenda(AgendaDTO agendaDTO);
     List<AgendaDTO> allAgendas();
     List<AgendaDTO> getAgendasByProductId(Integer id);
-    List<AgendaDTO> getAgendasByCategoryIdByFechas(Integer id, Date fechaIda, Date fechaVuelta);
+    List<AgendaDTO> getAgendasByFechas(Date fechaIda, Date fechaVuelta);
 }

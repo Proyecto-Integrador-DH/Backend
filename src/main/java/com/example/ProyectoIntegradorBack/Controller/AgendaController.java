@@ -74,12 +74,11 @@ public class AgendaController {
         }
     }
 
-    @GetMapping("/categoria/{id}/fechas")
-    public ResponseEntity<?> getAgendasByCategoryIdByFechas(@PathVariable Integer id,
-                                                            @RequestParam("fechaIda") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaIda,
+    @GetMapping("/fechas")
+    public ResponseEntity<?> getAgendasByCategoryIdByFechas(@RequestParam("fechaIda") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaIda,
                                                             @RequestParam("fechaVuelta") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaVuelta) {
         try {
-            Collection<AgendaDTO> agendas = agendaService.getAgendasByCategoryIdByFechas(id, fechaIda, fechaVuelta);
+            Collection<AgendaDTO> agendas = agendaService.getAgendasByFechas(fechaIda, fechaVuelta);
             if (agendas.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontraron agendas.");
             } else {
