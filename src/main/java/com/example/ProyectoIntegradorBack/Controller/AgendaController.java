@@ -35,6 +35,7 @@ public class AgendaController {
     public ResponseEntity<?> getAgendaById(Integer id){
         try {
             AgendaDTO agendaDTO = agendaService.getAgendaById(id);
+            System.out.println("AgendaDTO: " + agendaDTO + id);
             if (agendaDTO != null) {
                 return ResponseEntity.ok(agendaDTO);
             } else {

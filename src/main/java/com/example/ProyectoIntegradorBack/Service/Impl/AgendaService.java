@@ -18,10 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,7 +78,12 @@ public class AgendaService implements IAgendaService {
         for (Agenda agenda : agendas) {
             AgendaDTO agendaDTO = mapper.convertValue(agenda, AgendaDTO.class);
             Producto producto = agenda.getProducto();
-            ProductoDTO productoDTO = mapper.convertValue(producto, ProductoDTO.class);
+            Optional<Producto> optionalProducto = productoRepository.findById(producto.getId());
+            ProductoDTO productoDTO = null;
+            if (optionalProducto.isPresent()) {
+                producto = optionalProducto.get();
+                productoDTO = convertToDto(producto);
+            }
             agendaDTO = agendaDTO.withProducto(productoDTO);
             agendaDTOs.add(agendaDTO);
         }
@@ -95,7 +97,12 @@ public class AgendaService implements IAgendaService {
         for (Agenda agenda : agendas) {
             AgendaDTO agendaDTO = mapper.convertValue(agenda, AgendaDTO.class);
             Producto producto = agenda.getProducto();
-            ProductoDTO productoDTO = mapper.convertValue(producto, ProductoDTO.class);
+            Optional<Producto> optionalProducto = productoRepository.findById(producto.getId());
+            ProductoDTO productoDTO = null;
+            if (optionalProducto.isPresent()) {
+                producto = optionalProducto.get();
+                productoDTO = convertToDto(producto);
+            }
             agendaDTO = agendaDTO.withProducto(productoDTO);
             agendaDTOs.add(agendaDTO);
         }
@@ -109,7 +116,12 @@ public class AgendaService implements IAgendaService {
         for (Agenda agenda : agendas) {
             AgendaDTO agendaDTO = mapper.convertValue(agenda, AgendaDTO.class);
             Producto producto = agenda.getProducto();
-            ProductoDTO productoDTO = convertToDto(producto);
+            Optional<Producto> optionalProducto = productoRepository.findById(producto.getId());
+            ProductoDTO productoDTO = null;
+            if (optionalProducto.isPresent()) {
+                producto = optionalProducto.get();
+                productoDTO = convertToDto(producto);
+            }
             agendaDTO = agendaDTO.withProducto(productoDTO);
             agendaDTOs.add(agendaDTO);
         }
