@@ -103,6 +103,7 @@ public class FavoritoService implements IFavoritoService {
                 producto.getNombre(),
                 producto.getDescripcion(),
                 producto.isDisponible(),
+                producto.getUbicacion(),
                 categoriaDTO,
                 imagenesDto
         );

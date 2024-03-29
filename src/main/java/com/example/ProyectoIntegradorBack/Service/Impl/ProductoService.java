@@ -99,6 +99,7 @@ public class ProductoService implements IProductoService {
                 producto.getNombre(),
                 producto.getDescripcion(),
                 producto.isDisponible(),
+                producto.getUbicacion(),
                 categoriaDTO,
                 imagenesDto
         );

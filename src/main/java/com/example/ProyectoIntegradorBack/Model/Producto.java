@@ -20,10 +20,12 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private boolean disponible;
+    private String ubicacion;
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     @JsonBackReference
     private Categoria categoria;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "producto_id")
     @JsonIgnore
@@ -67,5 +69,11 @@ public class Producto {
         return categoria;
     }
 
+    public String getUbicacion() {
+        return ubicacion;
+    }
 
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
 }

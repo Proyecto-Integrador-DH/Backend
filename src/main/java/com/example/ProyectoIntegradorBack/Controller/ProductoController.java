@@ -80,10 +80,12 @@ public class ProductoController {
             }
             Producto producto = productoService.postProducto(productoDTO);
             Integer id = producto.getId();
+            System.out.println("ID del producto creado: " + id);
             return ResponseEntity.status(HttpStatus.CREATED).body(id);
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>("Ya existe un producto con ese nombre.", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>("Error al procesar la solicitud.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
