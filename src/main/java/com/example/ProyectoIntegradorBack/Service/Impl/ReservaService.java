@@ -3,11 +3,8 @@ package com.example.ProyectoIntegradorBack.Service.Impl;
 import com.amazonaws.services.glue.model.EntityNotFoundException;
 import com.example.ProyectoIntegradorBack.Model.Agenda;
 import com.example.ProyectoIntegradorBack.Model.Cliente;
+import com.example.ProyectoIntegradorBack.Model.DTOs.*;
 import com.example.ProyectoIntegradorBack.Model.Producto;
-import com.example.ProyectoIntegradorBack.Model.DTOs.AgendaDTO;
-import com.example.ProyectoIntegradorBack.Model.DTOs.ClienteDTO;
-import com.example.ProyectoIntegradorBack.Model.DTOs.ReservaDTO;
-import com.example.ProyectoIntegradorBack.Model.DTOs.ProductoDTO;
 import com.example.ProyectoIntegradorBack.Model.Reserva;
 import com.example.ProyectoIntegradorBack.Repository.IAgendaRepository;
 import com.example.ProyectoIntegradorBack.Repository.IClienteRepository;
@@ -20,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -128,14 +126,24 @@ public class ReservaService implements IReservaService {
         if (agenda == null) {
             return null;
         }
-        return new AgendaDTO(agenda.getId(), mapToProductoDTO(agenda.getProducto()), agenda.getCupos(),
+        return new AgendaDTO(agenda.getId(), convertToDto(agenda.getProducto()), agenda.getCupos(),
                 agenda.getFechaIda(), agenda.getFechaVuelta(), agenda.getEstado());
     }
 
-    private ProductoDTO mapToProductoDTO(Producto producto) {
-        if (producto == null) {
-            return null;
-        }
-        return new ProductoDTO(producto.getId(), producto.getNombre(), producto.getDescripcion(), producto.isDisponible());
+    private ProductoDTO convertToDto(Producto producto) {
+        CategoriaDTO categoriaDTO = mapper.convertValue(producto.getCategoria(), CategoriaDTO.class);
+        List<ImagenDTO> imagenesDto = producto.getImagenes().stream()
+                .map(imagen -> new ImagenDTO(imagen.getUrl(), imagen.getAltText()))
+                .collect(Collectors.toList());
+
+        ProductoDTO dto = new ProductoDTO(
+                producto.getId(),
+                producto.getNombre(),
+                producto.getDescripcion(),
+                producto.isDisponible(),
+                categoriaDTO,
+                imagenesDto
+        );
+        return dto;
     }
 }
