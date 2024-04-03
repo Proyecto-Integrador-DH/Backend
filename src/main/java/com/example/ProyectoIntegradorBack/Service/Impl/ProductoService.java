@@ -47,6 +47,17 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
+    public void updateProductoCaracteristicas(Integer idProducto, List<Integer> caracteristicas) {
+        Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
+        if (optionalProducto.isPresent()) {
+            Producto producto = optionalProducto.get();
+            producto.getCaracteristicas().clear();
+            producto.getCaracteristicas().addAll(caracteristicas);
+            productoRepository.save(producto);
+        }
+    }
+
+    @Override
     public void deleteProducto(Integer id) {
         productoRepository.deleteById(id);
     }
@@ -101,7 +112,8 @@ public class ProductoService implements IProductoService {
                 producto.isDisponible(),
                 producto.getUbicacion(),
                 categoriaDTO,
-                imagenesDto
+                imagenesDto,
+                producto.getCaracteristicas()
         );
         return dto;
     }

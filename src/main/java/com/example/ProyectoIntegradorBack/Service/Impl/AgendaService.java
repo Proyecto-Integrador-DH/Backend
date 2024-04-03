@@ -141,7 +141,8 @@ public class AgendaService implements IAgendaService {
                 producto.isDisponible(),
                 producto.getUbicacion(),
                 categoriaDTO,
-                imagenesDto
+                imagenesDto,
+                producto.getCaracteristicas()
         );
         return dto;
     }

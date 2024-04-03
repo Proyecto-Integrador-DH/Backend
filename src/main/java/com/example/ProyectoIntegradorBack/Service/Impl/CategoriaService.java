@@ -72,6 +72,7 @@ public class CategoriaService implements ICategoriaService {
                                         producto.getDescripcion(),
                                         producto.isDisponible(),
                                         producto.getUbicacion(),
+                                        producto.getCaracteristicas(),
                                         producto.getImagenes().stream()
                                                 .map(imagen -> new ImagenDTO(imagen.getUrl(), imagen.getAltText()))
                                                 .collect(Collectors.toList())

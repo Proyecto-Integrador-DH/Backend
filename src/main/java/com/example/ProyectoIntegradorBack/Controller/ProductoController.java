@@ -15,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/producto")
@@ -104,6 +106,20 @@ public class ProductoController {
             return ResponseEntity.status(HttpStatus.OK).body("Categoría agregada correctamente.");
         } catch (Exception e) {
                 System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
+        }
+    }
+
+    @PutMapping("/addCaracteristicas/{idProducto}")
+    public ResponseEntity<?> updateProductoCaracteristicas(@RequestHeader("Authorization") String token, @PathVariable Integer idProducto, @RequestBody List<Integer> caracteristicas){
+        try {
+            tieneRolAdmin = AuthenticationService.getRolesFromToken(token);
+            if(!tieneRolAdmin){
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No tiene permisos para realizar esta acción.");
+            }
+            productoService.updateProductoCaracteristicas(idProducto, caracteristicas);
+            return ResponseEntity.status(HttpStatus.OK).body("Producto actualizado correctamente.");
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Hubo un error al procesar la solicitud.");
         }
     }

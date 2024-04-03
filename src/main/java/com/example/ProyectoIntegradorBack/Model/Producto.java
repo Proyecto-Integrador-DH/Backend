@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -40,6 +42,23 @@ public class Producto {
     @JoinColumn(name = "producto_id")
     @JsonIgnore
     private List<Favorito> favoritos;
+
+    @ElementCollection
+    @CollectionTable(name = "producto_caracteristicas", joinColumns = @JoinColumn(name = "producto_id"))
+    @Column(name = "caracteristicas")
+    private List<Integer> caracteristicas = new ArrayList<>();
+
+    public List<Integer> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(List<Integer> caracteristicas) {
+        this.caracteristicas = caracteristicas;
+    }
+
+    public void setCaracteristicas(ArrayList<Integer> caracteristicas) {
+        this.caracteristicas = caracteristicas;
+    }
 
     public String getNombre() {
         return nombre;

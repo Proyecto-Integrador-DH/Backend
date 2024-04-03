@@ -143,7 +143,8 @@ public class ReservaService implements IReservaService {
                 producto.isDisponible(),
                 producto.getUbicacion(),
                 categoriaDTO,
-                imagenesDto
+                imagenesDto,
+                producto.getCaracteristicas()
         );
         return dto;
     }
